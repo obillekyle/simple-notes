@@ -23,7 +23,10 @@
   );
 
   function updateHeight() {
-    if (!tAreaRef.value) return;
+    if (!tAreaRef.value) {
+      note.value && setTimeout(updateHeight, 100);
+      return;
+    }
 
     const textArea = tAreaRef.value;
     textArea.style.height = 'auto';
@@ -64,7 +67,10 @@
     return long ? note.value.title.slice(0, 20) + '...' : note.value.title;
   });
 
-  watch(() => note.value?.content, updateHeight, { flush: 'post' });
+  watch(() => note.value?.content, updateHeight, {
+    immediate: true,
+    flush: 'post',
+  });
 </script>
 
 <template>
